@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="./public/css/style.css" />
+    <link rel="stylesheet" href="./public/css/zTreeStyle.css" />
+  
+    <script src="./public/lib/createjs/easeljs-NEXT.min.js"></script>
+	<script src="./public/lib/createjs/tweenjs-NEXT.min.js"></script>
+	<script src="./public/lib/createjs/movieclip-NEXT.min.js"></script>
+	<script src="./public/lib/createjs/preloadjs-NEXT.min.js"></script>
+	<script src="./public/lib/createjs/soundjs-NEXT.min.js"></script>
+ 	<script src="./public/lib/jquery/jquery-2.0.3.js"></script>
+	<script src="./public/lib/jquery/jquery.ztree.core-3.5.min.js"></script>
+	<script src="./public/lib/core/Overwrite.js"></script>
+
+	<script src="./public/lib/core/Class.js"></script>
+	<script src="./public/lib/core/UserAgent.js"></script>
+	<script src="./public/lib/core/Viewport.js"></script>
+	<script src="./public/lib/core/Resource.js"></script>
+	<script src="./public/lib/core/App.js"></script>
+	<script src="./public/lib/core/Scene.js"></script>
+	<script src="./public/lib/core/Observer.js"></script>
+
+	<script src="./public/lib/gui/Label.js"></script>
+	<script src="./public/lib/gui/Button.js"></script>
+	<script src="./public/lib/gui/Panel.js"></script>
+	<script src="./public/lib/gui/Scroller.js"></script>
+	<script src="./public/lib/gui/DragBox.js"></script>
+	<script src="./public/lib/gui/TextField.js"></script>
+	<script src="./public/lib/gui/TextArea.js"></script>
+	<script src="./public/lib/gui/ColorRectangle.js"></script>
+	<script src="./public/lib/gui/ColorCircle.js"></script>
+	
+	<script src="./public/lib/dom/DOMObject.js"></script>
+	<script src="./public/lib/dom/CSS3Animation.js"></script>
+	<!--<script src="../lib/dom/UIButton.js"></script>
+	<script src="../lib/dom/UICheckBox.js"></script>-->
+	<script src="./public/lib/dom/iscroll.js"></script>
+	<script src="./public/lib/dom/UIScroller.js"></script>
+
+	<script src="./public/lib/box2d/Box2dWeb-2.1.a.3.js"></script>
+	
+	<script src="./public/js/tool.js"></script>
+  </head>
+  <body>
+  	<div class="menu_panel">
+  		<button id="create_view" class="menu_item">创建</button>
+  		<button class="menu_item">保存</button>
+  		<button id="import" class="menu_item">导入</button>
+  		<button id="export" class="menu_item">导出</button>
+  	</div>
+    <div class="view_panel">
+    	<ul id="tree" class="ztree" style="width:250px; overflow:auto;"></ul>
+	</div>
+    <div class="tool_panel">
+    	<!--<button class="tool_item" name="Scene">Scene</button>-->
+    	<button class="tool_item" name="Label">Label</button>
+    	<button class="tool_item" name="Bitmap">Bitmap</button>
+    	<button class="tool_item" name="Button">Button</button>
+		<button class="tool_item" name="Panel">Panel</button>
+		<button class="tool_item" name="ColorRectangle">ColorRectangle</button>
+		<button class="tool_item" name="ColorCircle">ColorCircle</button>
+		<button class="tool_item" name="TextField">TextField</button>
+		<button class="tool_item" name="TextArea">TextArea</button>
+		<button class="tool_item" name="Scroller">Scroller</button>
+    </div>
+    <div class="param_panel">
+    	<span>Display</span><button class="param_save">保存</button><button class="param_del">删除</button>
+    	<table class="public_param">
+    		<tbody>
+    			<tr>
+    				<td>公共属性</td>
+    			</tr>
+    			<tr class="param_x">
+    				<td style="width:200px">x</td><td><input name="x" type="number"></td>
+    			</tr>
+    			<tr class="param_y">
+    				<td>y</td><td><input name="y" type="number"></td>
+    			</tr>
+    			<tr class="param_w">
+    				<td>width</td><td><input name="width" type="number"></td>
+    			</tr>
+    			<tr class="param_h">
+    				<td>height</td><td><input name="height" type="number"></td>
+    			</tr>
+    			<tr class="param_regX">
+    				<td>regX</td><td><input name="regX" type="number"></td>
+    			</tr>
+    			<tr class="param_regY">
+    				<td>regY</td><td><input name="regY" type="number"></td>
+    			</tr>
+    			<tr class="param_scaleX">
+    				<td>scaleX</td><td><input name="scaleX" type="number"></td>
+    			</tr>
+    			<tr class="param_scaleY">
+    				<td>scaleY</td><td><input name="scaleY" type="number"></td>
+    			</tr>
+    			<tr class="param_alpha">
+    				<td>alpha</td><td><input name="alpha" type="number"></td>
+    			</tr>
+    			<tr class="param_rotation">
+    				<td>rotation</td><td><input name="rotation" type="number"></td>
+    			</tr>
+    		</tbody>
+    	</table>
+    	
+    	<table class="private_bitmap" style="display:none;">
+    		<tbody style="boder-top:1px black solid;">
+    			<tr>
+    				<td>私有属性</td>
+    			</tr>
+    			<tr class="param_image">
+    				<td style="width:200px">image</td><td><button class="param_change_image">更换</button><button class="param_upload_image">上传</button></td>
+    			</tr>
+    			<tr class="param_image_url">
+    				<td>imageUrl</td><td><a></a></td>
+    			</tr>
+    		</tbody>
+    	</table>
+    	
+    	<table class="private_label" style="display:none;">
+    		<tbody style="boder-top:1px black solid;">
+    			<tr>
+    				<td>私有属性</td>
+    			</tr>
+    			<tr class="param_font_size">
+    				<td style="width:200px">fontSize</td><td><input name="fontSize" type="number"></td>
+    			</tr>
+    			<tr class="param_font_family">
+    				<td>fontFamily</td><td><input name="fontFamily" type="text"></td>
+    			</tr>
+    			<tr class="param_color">
+    				<td>color</td><td><input name="color" type="color"></td>
+    			</tr>
+    			<tr class="param_outline">
+    				<td>outline</td><td><input name="outline" type="color"></td>
+    			</tr>
+    			<tr class="param_text">
+    				<td>text</td><td><textarea name="text" style="height:100px;resize:none;"></textarea></td>
+    			</tr>
+    		</tbody>
+    	</table>
+    	<table class="private_panel" style="display:none;">
+    		<tbody style="boder-top:1px black solid;">
+    			<tr>
+    				<td>私有属性</td>
+    			</tr>
+    			<tr class="param_overflow">
+    				<td style="width:200px">overflow</td><td><input name="overflow" type="checkbox"></td>
+    			</tr>
+    		</tbody>
+    	</table>
+    	<table class="private_colorrect" style="display:none;">
+    		<tbody style="boder-top:1px black solid;">
+    			<tr>
+    				<td>私有属性</td>
+    			</tr>
+    			<tr class="param_colorrect">
+    				<td style="width:200px">color</td><td><input name="color" type="color"></td>
+    			</tr>
+    		</tbody>
+    	</table>
+    </div>
+    <div id="gameScreen">
+    	<canvas id="gameCanvas"></canvas>
+    </div>
+    <div class="img_list_panel">
+    	<div class="content">
+    	</div>
+    </div>
+  </body>
+</html>

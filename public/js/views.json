@@ -1,0 +1,1 @@
+{"Panel01":{"name":"Panel","x":282,"y":21,"width":400,"height":400,"children":[{"name":"Label","x":33,"y":53,"width":0,"height":0,"text":"肯跌的WebGLass"},{"name":"Bitmap","x":50,"y":104,"width":0,"height":0,"image":"http://127.0.0.1:3000/public/img/unknown.png"}]}}

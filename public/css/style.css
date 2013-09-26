@@ -1,0 +1,116 @@
+
+body {
+	margin: 0px;
+	padding: 0px;
+	background:rgb(230,230,230);
+	font-family: '微软雅黑';
+}
+
+body div,body canvas{
+	margin: 0px;
+	padding: 0px;
+	position: absolute;
+	box-shadow:0 0 3px black;
+}
+
+.menu_panel {
+	width:100%;
+	height:60px;
+	z-index:99;
+	background-image:-webkit-linear-gradient(top, #eee, #aaa);
+}
+
+.menu_item {
+	position:relative;
+	margin-left:50px;
+	margin-top:10px;
+	width:100px;
+	height:40px;
+}
+
+.view_panel {
+	left:0px;
+	top:60px;
+ 	width:200px;
+ 	min-height:600px;
+ }
+
+.view_item {
+	position:relative;
+	width:200px;
+	height:30px;
+	background:#CCC;
+	text-align:center;
+	font-size:24px;
+	line-height: 28px;
+}
+
+.view_item_selected {
+	background:#8ad;
+	color: #FFF;
+}
+
+.tool_panel {
+	left:200px;
+	top:60px;
+ 	width:110px;
+ 	min-height:600px;
+}
+.tool_item {
+	position:relative;
+	margin-left:5px;
+	margin-top:5px;
+ 	width:100px;
+ 	height:40px;
+}
+.param_panel {
+	top:60px;
+	right:0px;
+	width:250px;
+ 	min-height:600px;
+}
+
+
+.img_list_panel {
+	left:50%;
+	top:50%;
+	margin-left:-400px;
+	margin-top:-300px;
+	width:800px;
+	height:600px;	
+	z-index: 999;
+	background:-webkit-linear-gradient(top, #eee, #aaa);
+	display:none;
+	box-shadow:inset 0 0 5px 1px #CCC;
+}
+
+.img_list_panel .content {
+	width:100%;
+	height:auto;
+	box-shadow:none;
+}
+
+.img_item {
+	position:relative;
+	margin: 10px 0 0 10px;
+	box-shadow:0 0 5px 1px #F00;
+}
+
+#gameScreen {
+	left:50%;
+	top:60px;
+	width:800px;
+ 	height:600px;
+ 	margin-left:-400px;
+ 	overflow: hidden;
+ 	background:#000;
+}
+
+#gameCanvas {
+	width:100%;
+ 	height:100%;
+}
+
+#gameFPS {
+	color:#FFF;
+}

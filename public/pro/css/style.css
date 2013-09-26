@@ -1,0 +1,96 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: #FFF;
+	font-family: "微软雅黑";
+	-moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body * {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+}
+
+#gameScreen {
+	left: 50%;
+	top: 0px;
+	width: 480px;
+	height: 320px;
+	margin-left: -240px;
+	overflow: hidden;
+}
+
+#gameCanvas {
+	width: 100%;
+	height: 100%;
+}
+
+#gameFPS{
+	left:0px;
+	color:#FFF;
+	font-weight:bolder;
+	font-size:24px;
+	text-shadow: 1px 1px 1px black;
+	z-index:999;
+}
+
+#gameLogo {
+	left: 50%;
+	top: 50%;
+	margin-left: -150px;
+	margin-top: -60px;
+}
+
+.white{
+	width: 100%;
+	height: 100%;
+	background: #FFF;
+}
+
+.input {
+	width: 340px;
+	height: 50px;
+	color: red;
+	border-width:0px;
+	font-size: 34px;
+	/*background:rgba(0,0,0,0);*/
+}
+
+.area {
+	width: 540px;
+	height: 200px;
+	border-width:0px;
+	font-size: 34px;
+	resize: none;
+}
+
+.fadeIn {
+	animation: fadeIn 0.8s linear;
+	-webkit-animation: fadeIn 0.8s linear;
+}
+
+.fadeOut {
+	animation: fadeOut 0.8s linear;
+	-webkit-animation: fadeOut 0.8s linear;
+}
+/*
+@-webkit-keyframes fadeIn{
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@-webkit-keyframes fadeOut{
+	from { opacity: 1; }
+	to { opacity: 0; }
+}
+
+@-webkit-keyframes rotate{
+	from { transform: (0deg); -webkit-transform: (360deg); }
+	to { transform: (0deg); -webkit-transform: (360deg); }
+}
+*/
