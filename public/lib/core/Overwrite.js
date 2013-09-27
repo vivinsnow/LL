@@ -7,14 +7,13 @@ var display_p =  createjs.DisplayObject.prototype,
 
 //用矩阵运算取代 getImageData方式	
 var hitPoint = function(o, x, y){
-		var stage = App.stage,
-			mtx1 = o.getConcatenatedMatrix(),
+		var mtx1 = o.getConcatenatedMatrix(),
 			mtx2 = new createjs.Matrix2D();
-		mtx2.appendTransform(x/stage.scaleX, y/stage.scaleY, o.scaleX, o.scaleY, o.rotation, o.skewX, o.skewY, 0,0);
+		mtx2.append(mtx1.a, mtx1.b, mtx1.c, mtx1.d, x, y);
 		mtx1.invert();
 		mtx2.invert();
-		var w = o.getMeasuredWidth? o.getMeasuredWidth():0,
-		 	h = o.getMeasuredHeight? o.getMeasuredHeight():0,
+		var w = o.getMeasuredWidth? o.getMeasuredWidth(): 0,
+		 	h = o.getMeasuredHeight? o.getMeasuredHeight(): 0,
 			dx = mtx1.tx-mtx2.tx,
 			dy = mtx1.ty-mtx2.ty;
 		return !!(dx>=0&&dx<=w&&dy>0&&dy<h);
@@ -121,18 +120,18 @@ var hitPoint = function(o, x, y){
 	};
 	
 	bitmap_p.name = 'Bitmap';
-	bitmap_p.hitTestDraw = function( ctx ){
-		var width, height;
-		if (this.sourceRect) {
-			width = this.sourceRect.width;
-			height = this.sourceRect.height;
-		} else {
-			width = this.image.width;
-			height = this.image.height;
-		}
-		ctx.fillStyle = '#FFF';
-		ctx.fillRect(0, 0, width, height);
-	};
+	// bitmap_p.hitTestDraw = function( ctx ){
+		// var width, height;
+		// if (this.sourceRect) {
+			// width = this.sourceRect.width;
+			// height = this.sourceRect.height;
+		// } else {
+			// width = this.image.width;
+			// height = this.image.height;
+		// }
+		// ctx.fillStyle = '#FFF';
+		// ctx.fillRect(0, 0, width, height);
+	// };
 	bitmap_p.getMeasuredWidth = function(){
 		return this.sourceRect?this.sourceRect.width:this.image.width;
 	};

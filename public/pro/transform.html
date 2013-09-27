@@ -1,14 +1,18 @@
 <script src="../lib/createjs/easeljs-NEXT.min.js"></script>
 <script>
+var stage;
 	window.onload = function(){
-		var stage = new createjs.Stage(document.getElementById('gameCanvas'));
+		stage = new createjs.Stage(document.getElementById('gameCanvas'));
+		var c = new createjs.Container();
 		var rect = new createjs.Shape();
 		rect.graphics.beginStroke('#F00').drawRect(0,0,200,100);
-		rect.rotation = 30;
-		rect.x = 200;
-		rect.y = 50;
-		rect.scaleY = 0.9;
-		stage.addChild(rect);
+		c.rotation = 30;
+		c.x = 200;
+		c.y = 50;
+		c.scaleY = 0.5;
+		c.addChild(rect);
+		console.log(rect.getConcatenatedMatrix().toString());
+		stage.addChild(c);
 		stage.update();
 		var p = {x:270, y:190};
 		var ctx = stage.canvas.getContext('2d');
@@ -16,21 +20,39 @@
 		ctx.fillStyle = 'blue';
 		ctx.fillRect(p.x,p.y,2,2);
 		ctx.restore();
+		stage.canvas.addEventListener('click', function(e){
+			var x = e.offsetX, 
+				y = e.offsetY;
+			console.log(rect.getConcatenatedMatrix().toString());
+			hitPoint(c, x, y);
+			hitPoint(rect, x, y);
+			ctx.save();
+			ctx.fillStyle = 'blue';
+			ctx.fillRect(x,y,2,2);
+			ctx.restore();
+			
+		});
 		
-	}
+		
+	};
+	
+	
 	
 	var hitPoint = function(o, x, y){
-		var stage = App.stage,
-			mtx1 = o.getConcatenatedMatrix(),
-			mtx2 = new createjs.Matrix2D();
-		mtx2.appendTransform(x/stage.scaleX, y/stage.scaleY, o.scaleX, o.scaleY, o.rotation, o.skewX, o.skewY, 0,0);
+		var mtx1 = o.getConcatenatedMatrix();
+		var mtx2 = new createjs.Matrix2D();
+		
+		mtx2.append(mtx1.a,mtx1.b,mtx1.c,mtx1.d,x/stage.scaleX, y/stage.scaleY);
+		console.log(mtx1.toString(), mtx2.toString());
+		// mtx2.appendTransform(x/stage.scaleX, y/stage.scaleY, o.scaleX, o.scaleY, o.rotation, o.skewX, o.skewY, 0,0);
 		mtx1.invert();
 		mtx2.invert();
-		var w = o.getMeasuredWidth(),
-		 	h = o.getMeasuredHeight(),
+		var w = 200,//o.getMeasuredWidth(),
+		 	h = 100,//o.getMeasuredHeight(),
 			dx = mtx1.tx-mtx2.tx,
 			dy = mtx1.ty-mtx2.ty;
+		console.log(Math.floor(dx), Math.floor(dy), !!(dx>=0&&dx<=w&&dy>0&&dy<h));
 		return !!(dx>=0&&dx<=w&&dy>0&&dy<h);
-	}
+	};
 </script>
 <canvas style="width:800px;height:480px;border:1px black solid;" width=800 height=480 id="gameCanvas"></canvas>

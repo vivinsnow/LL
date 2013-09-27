@@ -25,13 +25,13 @@ var Scroller = cy.Panel.extend({
 	_scrollYTween: null,
 	
 	setContent: function(content){
-		this.content && this.removeChild(this.content);
+		if (this.content) this.removeChild(this.content);
+		if (this.scrollBarY) this.removeChild(this.scrollBarY);
+		if (content.width <= this.width) this._scrollX = false;
+		if (content.height <= this.height) this._scrollY = false;
+		
 		this.content = content;
-		
 		this.addChild(content);
-		if(content.width <= this.width) this._scrollX = false;
-		if(content.height <= this.height) this._scrollY = false;
-		
 		if (this._scrollY) {
 			this.scrollBarY = new cy.Shape();
 			this.scrollBarY.height = this.height*this.height/this.content.height;

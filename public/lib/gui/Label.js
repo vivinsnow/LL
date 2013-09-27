@@ -13,23 +13,24 @@ var Label = Class.extend.call(cy.Text, {
 	outline: false,
 	init: function( text, params ){
 		params = params || {};
-		this.setFont(params.fontSize, params.fontSize);
+		this.setFont(params.fontSize, params.fontFamily);
+		this.color = params.color || this.color;
 		this.outline = params.outline;
 		this.initialize( text, this.font, this.color );
 	},
 	
 	setFont: function(size, family){
-		size && (this.fontSize = size);
-		family && (this.fontFamily = size);
+		if (size) this.fontSize = size;
+		if (family) this.fontFamily = family;
 		this.font = this.fontSize+'px '+this.fontFamily;
 	},
 	
-	hitTestDraw: function(ctx){
-		var width = this.getMeasuredWidth(),
-			height = this.getMeasuredHeight();		
-		ctx.fillStyle = '#FFF';
-		ctx.fillRect(0, 0, width, height);
-	},
+	// hitTestDraw: function(ctx){
+		// var width = this.getMeasuredWidth(),
+			// height = this.getMeasuredHeight();		
+		// ctx.fillStyle = '#FFF';
+		// ctx.fillRect(0, 0, width, height);
+	// },
 	
 	_drawTextLine: function(ctx, text, y) {	
 		if (this.infill) { 

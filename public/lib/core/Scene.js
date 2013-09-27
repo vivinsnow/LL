@@ -3,9 +3,7 @@
     "use strict";
     
 var Scene = Class.extend.call(cy.Container, {
-	name: 'scene',
-	width: 0,
-	height: 0,
+	name: 'Scene',
 	init: function(){
 		this.initialize();
 		this.width = App.viewport.width;

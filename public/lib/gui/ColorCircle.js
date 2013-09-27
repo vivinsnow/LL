@@ -21,7 +21,7 @@ var ColorCircle = Class.extend.call(cy.Shape, {
 	reset: function(){
 		if(this._drawColor !== this.color || this._drawRadius !== this.radius){
 			this.graphics.clear();
-			this.graphics.beginFill(this.color).drawCircle(0,0,this.radius);
+			this.graphics.beginFill(this.color).drawCircle(this.radius,this.radius,this.radius);
 			this._drawColor = this.color;
 			this._drawRadius = this.radius;
 		}
@@ -33,11 +33,11 @@ var ColorCircle = Class.extend.call(cy.Shape, {
 	},
 	
 	getMeasuredWidth: function(){
-		return 0;
+		return 2*this.radius;
 	},
 	
 	getMeasuredHeight: function(){
-		return 0;
+		return 2*this.radius;
 	}
 });
 

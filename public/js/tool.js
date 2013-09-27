@@ -33,7 +33,7 @@ function selectObj( obj ){
 	if(current !== obj)	{
 		if(current) current.drawDebug = null;
 		current = obj;
-		drawTest(obj);
+		drawDebug(obj);
 		showParam(obj);
 	}
 }
@@ -88,7 +88,7 @@ function refreshTree(){
 	var zTree = $.fn.zTree.getZTreeObj("tree");
 }
 
-function drawTest(obj){
+function drawDebug(obj){
 	obj.drawDebug = function(ctx){
 		var w = this.getMeasuredWidth(),
 			h = this.getMeasuredHeight();
@@ -125,8 +125,8 @@ function play(){
 		startY = e.stageY;
 	});
 	App.stage.on('pressmove',function(e){
-		dragTarget.x = e.stageX-startX + baseX;
-		dragTarget.y = e.stageY-startY + baseY;
+		dragTarget.x = (e.stageX-startX)/App.stage.scaleX + baseX;
+		dragTarget.y = (e.stageY-startY)/App.stage.scaleY + baseY;
 	});
 	App.stage.on('pressup',function(e){
 		showParam(dragTarget);
@@ -180,8 +180,10 @@ function showParam(obj){
 function parseData(data){
 	if(data.name){
 		var obj;
-		
-		if(data.image){
+		if(data.up){
+			obj = new cy[data.name](data.up, data.down);
+		}
+		else if(data.image){
 			obj = new cy[data.name](data.image);
 		}else if(data.text){
 			obj = new cy[data.name](data.text);
@@ -238,11 +240,15 @@ function fillData(obj){
 	if(obj.image){
 		result.image = obj.image.src;
 	}
+	if(obj.contentBmp){
+		result.up = obj._bmpUp.image.src;
+		result.down = obj._bmpDown.image.src;
+	}
 	if(obj.text){
 		result.text = obj.text;
 	}
 	var children = obj.children;
-	if(children){
+	if(children && !obj.contentBmp){
 		result.children = [];
 		children.forEach(function(a,b){
 			result.children.push(fillData(a));
@@ -257,7 +263,7 @@ $(function(){
 	$('#create_view').bind('click', function(){
 		var viewName = prompt('请输入视图名称:');
 		if(viewName){
-			var obj = new cy.Panel(400, 400);
+			var obj = new cy.Panel(500, 500);
 			obj.root = true;
 			viewData[viewName] = obj;
 			displayObjs[viewName] = obj;
@@ -279,9 +285,15 @@ $(function(){
 	$('.tool_panel').bind('click', function(e){
 		if(e.target.name){
 			var obj = current;
-			if(obj && obj instanceof cy.Panel){
+			if(obj && (obj instanceof cy.Panel || obj instanceof cy.Scene)){
 				var child;
 				switch(e.target.name){
+					case 'Scene':
+						child = new cy.Scene();
+						break;
+					case 'Panel':
+						child = new cy.Panel(300, 300);
+						break;
 					case 'Label':
 						child = new cy.Label('Hello World');
 						break;
@@ -291,19 +303,21 @@ $(function(){
 					case 'Button':
 						child = new cy.Button('/public/img/btn_up.png','/public/img/btn_down.png');
 						break;
-					case 'Panel':
-						child = new cy.Panel(200, 200);
-						break;
 					case 'TextField':
+						child = new cy.TextField();
 						break;
 					case 'TextArea':
+						child = new cy.TextArea();
 						break;
-					case 'ColorRectangle':
-						child = new cy.ColorRectangle();
-						break;
+					case 'Scroller':
+						child = new cy.Scroller(300,300);
+						break;					
 					case 'ColorCircle':
 						child = new cy.ColorCircle();
 						break;	
+					case 'ColorRectangle':
+						child = new cy.ColorRectangle();
+						break;
 				}
 				if (child) {
 					obj.addChild(child);
@@ -386,6 +400,7 @@ $(function(){
 			$('.img_list_panel').show();
 			var html = '';
 			data && data.forEach(function(a,i){
+				if(a.indexOf('.png')>-1 || a.indexOf('.jpg')>-1)
 				html += '<img src="'+ a +'" class="img_item">';
 			});
 			$('.img_list_panel .content').html(html);

@@ -10,8 +10,8 @@ var Panel = Class.extend.call(cy.Container, {
 	
 	init: function( width, height ){
 		this.initialize();
-    	width>0 && (this.width = width);
-    	height>0 && (this.height = height);
+    	if (width>0) this.width = width;
+    	if (height>0) this.height = height;
 	},
 	
 	isVisible: function() {
@@ -19,7 +19,6 @@ var Panel = Class.extend.call(cy.Container, {
 	},
 	
 	draw: function( ctx, ignoreCache ){
-		
 		//剪切非溢出的部分
 		if (this.width !== 0 && this.height !== 0) {
 			if (this.border) {
@@ -37,12 +36,12 @@ var Panel = Class.extend.call(cy.Container, {
 		this.Super_draw( ctx, ignoreCache );
 	},
 	
-	hitTestDraw: function(ctx){
-		var width = this.width,
-			height = this.height;
-		ctx.fillStyle = '#FFF';
-		ctx.fillRect(0, 0, width, height);
-	},
+	// hitTestDraw: function(ctx){
+		// var width = this.width,
+			// height = this.height;
+		// ctx.fillStyle = '#FFF';
+		// ctx.fillRect(0, 0, width, height);
+	// },
 	
 	getMeasuredWidth: function(){
 		return this.width;

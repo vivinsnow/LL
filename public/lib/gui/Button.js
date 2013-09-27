@@ -10,13 +10,16 @@ var Button = Class.extend.call(cy.Container, {
 	contentBmp: null,
 	contentLbl: null,
 	preventMove: true,
+	
+	_bmpUp: null,
+	_bmpDown: null,
 	init: function(up, down, label){
 		this.initialize();
 		
-		up = new cy.Bitmap(up);
-		down = new cy.Bitmap(down);
+		this._bmpUp = new cy.Bitmap(up);
+		this._bmpDown = new cy.Bitmap(down);
 		
-		this.contentBmp = new cy.Bitmap(up.image);
+		this.contentBmp = new cy.Bitmap(this._bmpUp.image);
 		this.addChild(this.contentBmp);
 		
 		if( label ){
@@ -29,11 +32,11 @@ var Button = Class.extend.call(cy.Container, {
 		var handleEvent = function(evt){
 			switch (evt.type) {
 				case 'mousedown':
-					o._resetUI(down.image);
+					o._resetUI('down');
 					break;
 				case 'pressup':
 				case 'rollout':
-					o._resetUI(up.image);
+					o._resetUI('up');
 					break;
 			}
 		};
@@ -59,16 +62,24 @@ var Button = Class.extend.call(cy.Container, {
 		return this.contentBmp.image.height;
 	},
 	
-	hitTestDraw: function(ctx){
-		var image = this.contentBmp.image,
-			width = image.width,
-			height = image.height;
-		ctx.fillStyle = '#FFF';
-		ctx.fillRect(0, 0, width, height);
-	},
+	// hitTestDraw: function(ctx){
+		// var image = this.contentBmp.image,
+			// width = image.width,
+			// height = image.height;
+		// ctx.fillStyle = '#FFF';
+		// ctx.fillRect(0, 0, width, height);
+	// },
 			
-	_resetUI: function(image){
-		this.contentBmp.image = image;
+	_resetUI: function (state) {
+		switch(state){
+			case 'up':
+				this.contentBmp.image = this._bmpUp.image;
+				break;
+			case 'down':
+				this.contentBmp.image = this._bmpDown.image;
+				break;
+		}
+		
 	}
 
 });
